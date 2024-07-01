@@ -20,8 +20,20 @@ export default defineComponent({
 </script>
 
 <template>
-	<div>
+	<div
+		class="hoverEffect bg-orange-800 p-3 border-solid border-orange-600 border-4 rounded cursor-pointer"
+	>
 		{{ produceName }}
 		<img class="w-14" :src="produceImage" :alt="produceName" />
 	</div>
 </template>
+
+<style scoped>
+.hoverEffect {
+	transition: all 0.3s;
+}
+
+.hoverEffect:hover {
+	transform: scale(1.1);
+}
+</style>
