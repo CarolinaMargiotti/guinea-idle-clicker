@@ -40,7 +40,14 @@ export default defineComponent({
 		</div>
 		<div class="min-content">
 			<li class="produce min-content">
-				<Produce produceName="Cucumber"></Produce>
+				<Produce
+					:Produce="{
+						name: 'Cucumber',
+						quantity: 1,
+						cost: 5,
+						productionPerSecond: 3,
+					}"
+				></Produce>
 			</li>
 		</div>
 	</div>
