@@ -7,10 +7,19 @@ export default defineComponent({
 	components: {
 		Produce,
 	},
+	data() {
+		return {
+			productions: {
+				default: 1,
+			},
+		};
+	},
 	mounted() {
 		const startEarning = () => {
 			setInterval(() => {
-				store.incrementMoney(1);
+				Object.values(this.productions).forEach((value) => {
+					store.incrementMoney(value);
+				});
 			}, 1000);
 		};
 
@@ -19,6 +28,10 @@ export default defineComponent({
 	methods: {
 		earnMoney(amount) {
 			store.incrementMoney(amount);
+		},
+		updateProduction(productionName, productionValue) {
+			this.productions[productionName] = productionValue;
+			console.log(this.productions);
 		},
 	},
 	computed: {
@@ -47,6 +60,7 @@ export default defineComponent({
 						cost: 5,
 						productionPerSecond: 3,
 					}"
+					@productionUpdate="updateProduction"
 				></Produce>
 			</li>
 		</div>

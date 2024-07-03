@@ -47,7 +47,11 @@ export default defineComponent({
 			this.quantity += 1;
 			this.cost *= 1.5;
 			this.productionPerSecond = this.quantity * 1.5;
-			this.$emit("productionUpdate", this.productionPerSecond);
+			this.$emit(
+				"productionUpdate",
+				"Cucumber",
+				this.productionPerSecond
+			);
 		},
 	},
 });
