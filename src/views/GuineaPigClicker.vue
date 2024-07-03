@@ -7,36 +7,20 @@ export default defineComponent({
 	components: {
 		Produce,
 	},
-	data() {
-		return {
-			productions: {
-				default: 1,
-			},
-		};
-	},
 	mounted() {
-		const startEarning = () => {
-			setInterval(() => {
-				Object.values(this.productions).forEach((value) => {
-					store.incrementMoney(value);
-				});
-			}, 1000);
-		};
-
-		startEarning();
+		store.earnIncome();
 	},
 	methods: {
 		earnMoney(amount) {
 			store.incrementMoney(amount);
 		},
 		updateProduction(productionName, productionValue) {
-			this.productions[productionName] = productionValue;
-			console.log(this.productions);
+			store.updateIncome(productionName, productionValue);
 		},
 	},
 	computed: {
 		money() {
-			return store.money;
+			return store.getMoney();
 		},
 	},
 });
