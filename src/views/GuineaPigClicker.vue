@@ -17,10 +17,9 @@ export default defineComponent({
 		updateProduction(productionName, productionValue) {
 			store.updateIncome(productionName, productionValue);
 		},
-	},
-	computed: {
-		money() {
-			return store.getMoney();
+		buyProduce(productionName, productionValue, productionCost) {
+			store.decrementMoney(productionCost);
+			this.updateProduction(productionName, productionValue);
 		},
 	},
 });
@@ -44,7 +43,8 @@ export default defineComponent({
 						cost: 5,
 						productionPerSecond: 3,
 					}"
-					@productionUpdate="updateProduction"
+						:moneyAvailable="money"
+						@productionUpdate="buyProduce"
 				></Produce>
 			</li>
 		</div>

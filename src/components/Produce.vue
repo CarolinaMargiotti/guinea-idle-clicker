@@ -14,12 +14,10 @@ export default defineComponent({
 				productionPerSecond: Number,
 			},
 			required: true,
-			default: {
-				name: "Cucumber",
-				quantity: 0,
-				cost: 5,
-				productionPerSecond: 3,
-			},
+		},
+		moneyAvailable: {
+			type: Number,
+			required: true,
 		},
 	},
 	data() {
@@ -44,14 +42,20 @@ export default defineComponent({
 	},
 	methods: {
 		buyProduction() {
-			this.quantity += 1;
-			this.cost *= 1.5;
+			if (this.moneyAvailable < this.cost) {
+				alert("not enough money");
+				return;
+			}
+
 			this.productionPerSecond = this.quantity * 1.5;
 			this.$emit(
 				"productionUpdate",
 				"Cucumber",
-				this.productionPerSecond
+				this.productionPerSecond,
+				this.cost
 			);
+			this.quantity += 1;
+			this.cost *= 1.5;
 		},
 	},
 });
