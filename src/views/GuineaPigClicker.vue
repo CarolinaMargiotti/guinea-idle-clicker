@@ -2,6 +2,7 @@
 import Produce from "@/components/Produce.vue";
 import { defineComponent } from "vue";
 import { store } from "@/util/store";
+import { Productions } from "@/interfaces/Productions";
 export default defineComponent({
 	name: "GuineaPigClicker",
 	components: {
@@ -9,6 +10,16 @@ export default defineComponent({
 	},
 	mounted() {
 		store.earnIncome();
+	},
+	data() {
+		return {
+			productionsList: Productions,
+		};
+	},
+	computed: {
+		money() {
+			return store.getMoney();
+		},
 	},
 	methods: {
 		earnMoney(amount) {
@@ -36,16 +47,18 @@ export default defineComponent({
 		</div>
 		<div class="min-content">
 			<li class="produce min-content">
-				<Produce
-					:Produce="{
-						name: 'Cucumber',
-						quantity: 1,
-						cost: 5,
-						productionPerSecond: 3,
-					}"
+				<div v-for="(item, index) in productionsList" :key="index">
+					<Produce
+						:produce="{
+							name: item.name,
+							quantity: item.quantity,
+							cost: item.cost,
+							productionPerSecond: item.productionPerSecond,
+						}"
 						:moneyAvailable="money"
 						@productionUpdate="buyProduce"
-				></Produce>
+					></Produce>
+				</div>
 			</li>
 		</div>
 	</div>
