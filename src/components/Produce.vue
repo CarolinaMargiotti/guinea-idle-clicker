@@ -11,7 +11,8 @@ export default defineComponent({
 				name: String,
 				quantity: Number,
 				cost: Number,
-				productionPerSecond: Number,
+				moneyTurnOver: Number,
+				productionTime: Number,
 			},
 			required: true,
 		},
@@ -23,16 +24,15 @@ export default defineComponent({
 	data() {
 		return {
 			name: "",
-			quantity: 0,
+			quantity: 1,
 			cost: 5,
-			productionPerSecond: 3,
+			moneyTurnOver: 3,
+			productionTime: Number,
 		};
 	},
 	mounted() {
-		this.name = this.produce.name;
-		this.quantity = this.produce.quantity;
-		this.cost = this.produce.cost;
-		this.productionPerSecond = this.produce.productionPerSecond;
+		this.setDataFromProps();
+		this.earnProduction();
 	},
 	computed: {
 		produceImage() {
@@ -47,15 +47,23 @@ export default defineComponent({
 				return;
 			}
 
-			this.productionPerSecond = this.quantity * 1.5;
-			this.$emit(
-				"productionUpdate",
-				"Cucumber",
-				this.productionPerSecond,
-				this.cost
-			);
+			this.moneyTurnOver = this.quantity * 1.5;
 			this.quantity += 1;
 			this.cost *= 1.5;
+			this.productionTime *= 0.7;
+		},
+		setDataFromProps() {
+			this.name = this.produce.name;
+			this.quantity = this.produce.quantity;
+			this.cost = this.produce.cost;
+			this.moneyTurnOver = this.produce.moneyTurnOver;
+			this.productionTime = this.produce.productionTime;
+		},
+		earnProduction() {
+			if (this.quantity == 0) return;
+			setInterval(() => {
+				this.$emit("moneyEarned", this.moneyTurnOver);
+			}, this.productionTime);
 		},
 	},
 });
@@ -70,7 +78,7 @@ export default defineComponent({
 			<img class="w-14" :src="produceImage" :alt="name" />
 			<p>Quantity: {{ quantity }}</p>
 			<p>Cost: {{ cost }}</p>
-			<p>Production per second: {{ productionPerSecond }}</p>
+			<p>Production per second: {{ moneyTurnOver }}</p>
 		</div>
 	</Button>
 </template>

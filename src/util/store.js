@@ -5,13 +5,7 @@ export const store = reactive({
 	productions: {
 		default: 1,
 	},
-	earnIncome() {
-		setInterval(() => {
-			Object.values(this.productions).forEach((value) => {
-				this.incrementMoney(value);
-			});
-		}, 1000);
-	},
+
 	updateIncome(productionName, productionValue) {
 		this.productions[productionName] = productionValue;
 	},

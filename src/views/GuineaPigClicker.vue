@@ -8,9 +8,7 @@ export default defineComponent({
 	components: {
 		Produce,
 	},
-	mounted() {
-		store.earnIncome();
-	},
+	mounted() {},
 	data() {
 		return {
 			productionsList: Productions,
@@ -25,12 +23,8 @@ export default defineComponent({
 		earnMoney(amount) {
 			store.incrementMoney(amount);
 		},
-		updateProduction(productionName, productionValue) {
-			store.updateIncome(productionName, productionValue);
-		},
-		buyProduce(productionName, productionValue, productionCost) {
+		buyProduce(productionCost) {
 			store.decrementMoney(productionCost);
-			this.updateProduction(productionName, productionValue);
 		},
 	},
 });
@@ -53,9 +47,11 @@ export default defineComponent({
 							name: item.name,
 							quantity: item.quantity,
 							cost: item.cost,
-							productionPerSecond: item.productionPerSecond,
+							moneyTurnOver: item.moneyTurnOver,
+							productionTime: item.productionTime,
 						}"
 						:moneyAvailable="money"
+						@moneyEarned="earnMoney"
 						@productionUpdate="buyProduce"
 					></Produce>
 				</div>
